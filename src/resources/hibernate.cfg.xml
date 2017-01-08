@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.dialect">
+			org.hibernate.dialect.MySQLDialect
+		</property>
+		<property name="hibernate.connection.driver_class">
+			org.mariadb.jdbc.Driver
+		</property>
+		<!-- Database connection properties -->
+		<property name="hibernate.connection.url">
+			jdbc:mysql://localhost/stadion
+		</property>
+		<property name="hibernate.connection.username">
+			testusr
+		</property>
+		<property name="hibernate.connection.password">
+			passwd
+		</property>
+		<!-- List of mapping -->
+		<mapping class="bd2.Adress" />
+<!-- 		<mapping class="bd2.Ticket" /> -->
+<!-- 		<mapping class="bd2.Price" /> -->
+<!-- 		<mapping class="bd2.Carnet" /> -->
+<!-- 		<mapping class="bd2.Customer" /> -->
+<!-- 		<mapping class="bd2.Seat" /> -->
+<!-- 		<mapping class="bd2.Reservation" /> -->
+<!-- 		<mapping class="bd2.Sector" /> -->
+<!-- 		<mapping class="bd2.Stadium" /> -->
+<!-- 		<mapping class="bd2.TicketStatus" /> -->
+<!-- 		<mapping class="bd2.ClientType" /> -->
+<!-- 		<mapping class="bd2.SectorType" /> -->
+<!-- 		<mapping class="bd2.EventType" /> -->
+<!-- 		<mapping class="bd2.Event" /> -->
+	</session-factory>
+</hibernate-configuration>
