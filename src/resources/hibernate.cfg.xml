@@ -29,10 +29,10 @@
 <!-- 		<mapping class="bd2.Reservation" /> -->
 <!-- 		<mapping class="bd2.Sector" /> -->
 <!-- 		<mapping class="bd2.Stadium" /> -->
-<!-- 		<mapping class="bd2.TicketStatus" /> -->
-<!-- 		<mapping class="bd2.ClientType" /> -->
+		<mapping class="bd2.TicketStatus" />
+		<mapping class="bd2.ClientType" />
 <!-- 		<mapping class="bd2.SectorType" /> -->
-<!-- 		<mapping class="bd2.EventType" /> -->
+		<mapping class="bd2.EventType" />
 <!-- 		<mapping class="bd2.Event" /> -->
 	</session-factory>
 </hibernate-configuration>
