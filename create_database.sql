@@ -39,7 +39,8 @@ CREATE TABLE IF NOT EXISTS `stadion`.`adresy` (
   `nr_domu` SMALLINT UNSIGNED NOT NULL,
   `kod_pocztowy` VARCHAR(15) NOT NULL,
   `nr_mieszkania` INT UNSIGNED NULL,
-  PRIMARY KEY (`id_adresu`))
+  PRIMARY KEY (`id_adresu`),
+  UNIQUE INDEX uq_adres (miasto, ulica, nr_domu, kod_pocztowy, nr_mieszkania))
 ENGINE = InnoDB;
 
 
@@ -110,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `stadion`.`stadiony` (
   `czynny_od` TIME NOT NULL,
   `czynny_do` TIME NOT NULL,
   PRIMARY KEY (`id_stadionu`),
-  INDEX `adresy_id_adresu_idx` (`adresy_id_adresu` ASC),
+  UNIQUE INDEX `adresy_id_adresu_idx` (`adresy_id_adresu` ASC),
   CONSTRAINT `fk_stadiony_adresy`
     FOREIGN KEY (`adresy_id_adresu`)
     REFERENCES `stadion`.`adresy` (`id_adresu`)
@@ -205,6 +206,8 @@ CREATE TABLE IF NOT EXISTS `stadion`.`wydarzenia` (
   PRIMARY KEY (`id_wydarzenia`),
   INDEX `typy_wydarzen_id_typu_idx` (`typy_wydarzen_id_typu` ASC),
   INDEX `stadiony_id_stadionu_idx` (`stadiony_id_stadionu` ASC),
+  UNIQUE INDEX uq_wydarzenia (nazwa, data_wydarzenia, stadiony_id_stadionu),
+
   CONSTRAINT `fk_wydarzenia_typy_wydarzen`
     FOREIGN KEY (`typy_wydarzen_id_typu`)
     REFERENCES `stadion`.`typy_wydarzen` (`id_typu`)
@@ -252,6 +255,7 @@ CREATE TABLE IF NOT EXISTS `stadion`.`bilety` (
   INDEX `karnety_id_karnetu_idx` (`karnety_id_karnetu` ASC),
   INDEX `statusy_biletow_id_statusu_idx` (`statusy_biletow_id_statusu` ASC),
   INDEX `wydarzenie_id_wydarzenia_idx` (`wydarzenie_id_wydarzenia` ASC),
+  UNIQUE INDEX uq_miejsce (miejsca_id_miejsca, wydarzenie_id_wydarzenia),
   CONSTRAINT `fk_bilety_klienci`
     FOREIGN KEY (`klienci_id_klienta`)
     REFERENCES `stadion`.`klienci` (`id_klienta`)
@@ -292,6 +296,7 @@ CREATE TABLE IF NOT EXISTS `stadion`.`ceny` (
   `cena` DECIMAL UNSIGNED NOT NULL,
   INDEX `sektory_id_sektora_idx` (`sektory_id_sektora` ASC),
   INDEX `wydarzenie_id_wydarzenia_idx` (`wydarzenie_id_wydarzenia` ASC),
+  UNIQUE INDEX uq_cena (wydarzenie_id_wydarzenia, sektory_id_sektora),
   PRIMARY KEY (`id_ceny`),
   CONSTRAINT `fk_ceny_sektory`
     FOREIGN KEY (`sektory_id_sektora`)
@@ -320,7 +325,7 @@ CREATE TABLE IF NOT EXISTS `stadion`.`rezerwacje` (
   `zrealizowana` BIT NOT NULL,
   PRIMARY KEY (`id_rezerwacji`),
   INDEX `klienci_id_klienta_idx` (`klienci_id_klienta` ASC),
-  INDEX `bilety_id_biletu_idx` (`bilety_id_biletu` ASC),
+  UNIQUE INDEX `bilety_id_biletu_idx` (`bilety_id_biletu` ASC),
   CONSTRAINT `fk_rezerwacje_klienci`
     FOREIGN KEY (`klienci_id_klienta`)
     REFERENCES `stadion`.`klienci` (`id_klienta`)
