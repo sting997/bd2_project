@@ -21,18 +21,18 @@
 		</property>
 		<!-- List of mapping -->
 		<mapping class="bd2.Adress" />
-<!-- 		<mapping class="bd2.Ticket" /> -->
-<!-- 		<mapping class="bd2.Price" /> -->
-<!-- 		<mapping class="bd2.Carnet" /> -->
-<!-- 		<mapping class="bd2.Customer" /> -->
-<!-- 		<mapping class="bd2.Seat" /> -->
-<!-- 		<mapping class="bd2.Reservation" /> -->
-<!-- 		<mapping class="bd2.Sector" /> -->
+		<mapping class="bd2.Ticket" />
+		<mapping class="bd2.Price" />
+		<mapping class="bd2.Carnet" />
+		<mapping class="bd2.Customer" />
+		<mapping class="bd2.Seat" />
+		<mapping class="bd2.Reservation" />
+		<mapping class="bd2.Sector" />
 		<mapping class="bd2.Stadium" />
 		<mapping class="bd2.TicketStatus" />
 		<mapping class="bd2.ClientType" />
 		<mapping class="bd2.SectorType" />
 		<mapping class="bd2.EventType" />
-<!-- 		<mapping class="bd2.Event" /> -->
+		<mapping class="bd2.Event" />
 	</session-factory>
 </hibernate-configuration>
