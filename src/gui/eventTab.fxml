@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- <Tab fx:id="eventTab" onSelectionChanged="#eventSelectionHandler" text="Event" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EventController"> -->
+<!--    <content> -->
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <center>
+            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <columns>
+<!--                   <TableColumn fx:id="eventIdTableColumn" prefWidth="75.0" text="Id" /> -->
+<!--                   <TableColumn fx:id="eventNameTableColumn" prefWidth="75.0" text="Name" /> -->
+<!--                   <TableColumn fx:id="eventDateTableColumn" prefWidth="75.0" text="Date" /> -->
+<!--                   <TableColumn fx:id="eventStadiumTableColumn" prefWidth="75.0" text="Stadium" /> -->
+<!--                   <TableColumn fx:id="eventTypeTableColumn" prefWidth="87.0" text="Type" /> -->
+               </columns>
+            </TableView>
+         </center>
+         <left>
+            <VBox alignment="BASELINE_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Menu">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Add">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button layoutX="29.0" layoutY="53.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Edit">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button layoutX="29.0" layoutY="88.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Delete">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+         </left>
+      </BorderPane>
+<!--    </content> -->
+<!-- </Tab> -->

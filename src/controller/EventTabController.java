@@ -22,7 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
-public class Controller {
+public class EventTabController {
     @FXML private TableView<Event> eventTableView;
 	@FXML private TableColumn eventIdTableColumn;
 	@FXML private TableColumn eventNameTableColumn;
@@ -30,7 +30,7 @@ public class Controller {
 	@FXML private TableColumn eventStadiumTableColumn;
 	@FXML private TableColumn eventTypeTableColumn;
 	@FXML
-	private void initialize() {
+	public void initialize() {
 	    eventIdTableColumn.setCellValueFactory(new PropertyValueFactory<Event,Integer>("id"));
     	eventNameTableColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("name"));
     	SessionFactory factory;
@@ -58,34 +58,5 @@ public class Controller {
 		
 		factory.close();
     }
-	  
-    @FXML public void eventSelectionHandler(ActionEvent actionEvent) {
-//    	
-//    	eventIdTableColumn.setCellValueFactory(new PropertyValueFactory<Event,Integer>("id"));
-//    	eventNameTableColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("name"));
-//    	SessionFactory factory;
-//		try {
-//			factory = new Configuration().configure("/resources/hibernate.cfg.xml").buildSessionFactory();
-//		} catch (Throwable ex) {
-//			System.err.println("Failed to create sessionFactory object." + ex);
-//			throw new ExceptionInInitializerError(ex);
-//		}
-//		
-//		Session session = factory.openSession();
-//		Transaction tx = null;
-//		try{
-//			tx = session.beginTransaction();
-//			List list = session.createQuery("FROM Event").list();
-//			ObservableList<Event> data = FXCollections.observableList(list);
-//			eventTableView.setItems(data);
-//			tx.commit();
-//		}catch (HibernateException e) {
-//			if (tx!=null) tx.rollback();
-//			e.printStackTrace();
-//		}finally {
-//			session.close();
-//		}
-//		
-//		factory.close();
-    }
+	 
 }
