@@ -9,16 +9,17 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 
 public class MainController {
-//	@FXML private TableView<Event> eventTableView;
-//	@FXML private TableColumn eventIdTableColumn;
-//	@FXML private TableColumn eventNameTableColumn;
-//	@FXML private TableColumn eventDateTableColumn;
-//	@FXML private TableColumn eventStadiumTableColumn;
-//	@FXML private TableColumn eventTypeTableColumn;
+	
 //	@FXML private TabPane tabPane ;
 //	// Inject tab content.
 //	@FXML private Tab eventTab;
-	@FXML private TableView<Event> tableView;
+	@FXML private BorderPane borderPane;
+	@FXML private TableView<Event> eventTableView;
+	@FXML private TableColumn eventIdTableColumn;
+	@FXML private TableColumn eventNameTableColumn;
+	@FXML private TableColumn eventDateTableColumn;
+	@FXML private TableColumn eventStadiumTableColumn;
+	@FXML private TableColumn eventTypeTableColumn;
 	// Inject controller
 	@FXML private EventTabController eventTabController;
 	
