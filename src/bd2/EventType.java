@@ -15,7 +15,7 @@ public class EventType {
 	private String typeName;
 	
 	@Id
-	@Column(name="id_typu_wydarzen")
+	@Column(name="id_typu")
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy="increment")
 	public byte getId() {

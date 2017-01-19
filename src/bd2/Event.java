@@ -1,6 +1,8 @@
 package bd2;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +14,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.cfg.Configuration;
 
 @Entity
 @Table(name="wydarzenia")
@@ -34,7 +41,7 @@ public class Event {
 		this.id = id;
 	}
 	
-	@Column(name="nazwa_wydarzenia")
+	@Column(name="nazwa")
 	public String getName() {
 		return name;
 	}
@@ -69,5 +76,34 @@ public class Event {
 		this.eventType = eventType;
 	}
 	
+	public static void main(String[] args) {
+		SessionFactory factory;
+		try {
+			factory = new Configuration().configure("/resources/hibernate.cfg.xml").buildSessionFactory();
+		} catch (Throwable ex) {
+			System.err.println("Failed to create sessionFactory object." + ex);
+			throw new ExceptionInInitializerError(ex);
+		}
+		
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try{
+			tx = session.beginTransaction();
+			List list = session.createQuery("FROM Event").list();
+			for (Iterator iterator =list.iterator(); iterator.hasNext();){
+				Event stadium = (Event) iterator.next();
+				System.out.print(stadium.getId() + " ");
+				System.out.print(stadium.getName() + " ");
+			}
+			tx.commit();
+		}catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		factory.close();
+	}
 	
 }
