@@ -342,3 +342,16 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+DELIMITER $$
+CREATE TRIGGER `crypt_trg` BEFORE INSERT ON `klienci`
+FOR EACH ROW
+BEGIN
+    SET new.imie = AES_ENCRYPT(new.imie, 'pingantoniak');
+    SET new.nazwisko := AES_ENCRYPT(new.nazwisko, 'pingantoniak');
+    SET new.telefon = AES_ENCRYPT(new.telefon, 'pingantoniak');
+    SET new.email = AES_ENCRYPT(new.email, 'pingantoniak');
+    SET new.photo = AES_ENCRYPT(new.photo, 'pingantoniak');
+ END$$
+DELIMITER ;
