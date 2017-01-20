@@ -1,10 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,10 +14,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import bd2.Adress;
-import bd2.Event;
-import bd2.EventType;
-import bd2.Stadium;
+
 import bd2.Seat;
 import bd2.Sector;
 
@@ -74,7 +68,7 @@ public class SeatTabController {
 			handleDelete();
 		});
 		editSeatButton.setOnAction((ActionEvent event) -> {
-			// TODO handler
+			handleEdit();
 		});
 	}
 
@@ -143,6 +137,76 @@ public class SeatTabController {
 			}
 		}
 	}
+	
+	
+	private void handleEdit() {
+		
+		int selectedIndex = seatTableView.getSelectionModel().getSelectedIndex();
+		
+		if (selectedIndex >= 0) {
+			Seat seat = seatTableView.getItems().get(selectedIndex);
+
+			HBox root = new HBox();
+			TextField sectorTextField = new TextField("Sector id");
+			TextField rowNumberTextField = new TextField("Row Number");
+			TextField seatNumberTextField = new TextField("Seat Number");
+			Button editButton = new Button("Edit");
+			root.getChildren().add(sectorTextField);
+			root.getChildren().add(rowNumberTextField);
+			root.getChildren().add(seatNumberTextField);
+			root.getChildren().add(editButton);
+			
+			editButton.setOnAction((ActionEvent event) -> {
+				byte sectorId = Byte.parseByte(sectorTextField.getText());
+				int rowNumber = Integer.parseInt(rowNumberTextField.getText());
+				int seatNumber = Integer.parseInt(seatNumberTextField.getText());
+				
+				Session session = factory.openSession();
+				Transaction tx = null;
+				try { 
+					tx = session.beginTransaction();
+					Sector sector =(Sector)session.get(Sector.class, sectorId);
+					seat.setSector(sector);
+					seat.setRowNumber(rowNumber);
+					seat.setSeatNumber(seatNumber);
+					session.update(seat);
+					tx.commit();
+					seatTableView.getItems().set(selectedIndex, seat);
+					
+				} catch (HibernateException e) { 
+					if (tx != null)
+						tx.rollback();
+					//TODO: info ze cos sie zepsulo nie bylo mnie slychac
+					e.printStackTrace();
+				} finally { 
+					session.close();
+				}
+			});
+			
+			Stage stage = new Stage();
+			stage.setTitle("Edit Seat");
+			stage.setScene(new Scene(root));
+			stage.show();
+		}
+	}/*
+		public void updateEmployee(Integer EmployeeID, int salary ){
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try{
+		tx = session.beginTransaction();
+		Employee employee =
+		(Employee)session.get(Employee.class, EmployeeID);
+		employee.setSalary( salary );
+		session.update(employee);
+		tx.commit();
+		}catch (HibernateException e) {
+		if (tx!=null) tx.rollback();
+		e.printStackTrace();
+		}finally {
+		65Hibernate
+		session.close();
+		}
+	}*/
 
 	private void loadData() {
 		seatIdTableColumn.setCellValueFactory(new PropertyValueFactory<Seat, Integer>("id"));
