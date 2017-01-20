@@ -21,12 +21,14 @@ public class MainController {
 	@FXML private TableColumn eventDateTableColumn;
 	@FXML private TableColumn eventStadiumTableColumn;
 	@FXML private TableColumn eventTypeTableColumn;
-	@FXML private TextField idTextField;
-	@FXML private TextField nameTextField;
-	@FXML private TextField dateTextField;
-	@FXML private TextField stadiumTextField;
-	@FXML private TextField typeTextField;
-	@FXML private Button addButton;
+//	@FXML private TextField idTextField;
+//	@FXML private TextField nameTextField;
+//	@FXML private TextField dateTextField;
+//	@FXML private TextField stadiumTextField;
+//	@FXML private TextField typeTextField;
+	@FXML private Button addEventButton;
+	@FXML private Button editEventButton;
+	@FXML private Button deleteEventButton;
 	// Inject controller
 	@FXML private EventTabController eventTabController;
 	
