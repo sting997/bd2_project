@@ -81,12 +81,12 @@ public class EventTabController {
 		root.getChildren().add(addButton);
 		
 		addButton.setOnAction((ActionEvent event) -> {
-			byte stadiumId = Byte.parseByte(stadiumTextField.getText());
-			byte typeId = Byte.parseByte(typeTextField.getText());
-			String name = nameTextField.getText();
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date;
 			try {
+				byte stadiumId = Byte.parseByte(stadiumTextField.getText());
+				byte typeId = Byte.parseByte(typeTextField.getText());
+				String name = nameTextField.getText();
 				date = dateFormat.parse(dateTextField.getText());
 				Session session = factory.openSession();
 				Transaction tx = null;
@@ -110,7 +110,9 @@ public class EventTabController {
 				} finally {
 					session.close();
 				}
-			} catch (ParseException e) {
+			}catch (NumberFormatException nfx) {
+				// TODO: handle exception
+			}catch (ParseException e) {
 				//TODO print some info
 				e.printStackTrace();
 			}
