@@ -37,12 +37,17 @@ public class Sector {
 	}
 	
 	@ManyToOne
-	@JoinColumn(name="sektory_id_sektora")
+	@JoinColumn(name="typy_sektora_id_typu")
 	public SectorType getSectorType() {
 		return sectorType;
 	}
 	public void setSectorType(SectorType sectorType) {
 		this.sectorType = sectorType;
+	}
+	
+	@Override
+	public String toString() {
+		return this.sectorType.getTypeName();
 	}
 	
 	

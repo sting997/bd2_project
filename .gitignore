@@ -1,3 +1,5 @@
 bin/
 .classpath
 *.bak
+src/resources/hibernate.cfg.xml
+.metadata/

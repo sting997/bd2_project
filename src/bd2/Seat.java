@@ -35,14 +35,14 @@ public class Seat {
 	public void setSector(Sector sector) {
 		this.sector = sector;
 	}
-	@Column(name="numer_rzedu")
+	@Column(name="nr_rzedu")
 	public int getRowNumber() {
 		return rowNumber;
 	}
 	public void setRowNumber(int rowNumber) {
 		this.rowNumber = rowNumber;
 	}
-	@Column(name="numer_miejsca")
+	@Column(name="nr_miejsca")
 	public int getSeatNumber() {
 		return seatNumber;
 	}
