@@ -33,5 +33,10 @@ public class EventType {
 		this.typeName = typeName;
 	}
 	
-	
+	@Override
+	public String toString() {
+//		String string = new String();
+//		return string + id;
+		return typeName;
+	}
 }

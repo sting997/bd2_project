@@ -107,4 +107,11 @@ public class Stadium {
 		factory.close();
 	}
 	
+	@Override
+	public String toString() {
+//		String string = new String();
+//		return string + id;
+		return name;
+	}
+	
 }

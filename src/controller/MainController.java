@@ -1,5 +1,8 @@
 package controller;
 
+import java.awt.Button;
+import java.awt.TextField;
+
 import bd2.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
@@ -10,9 +13,7 @@ import javafx.scene.layout.BorderPane;
 
 public class MainController {
 	
-//	@FXML private TabPane tabPane ;
-//	// Inject tab content.
-//	@FXML private Tab eventTab;
+	// Inject tab content.
 	@FXML private BorderPane borderPane;
 	@FXML private TableView<Event> eventTableView;
 	@FXML private TableColumn eventIdTableColumn;
@@ -20,6 +21,12 @@ public class MainController {
 	@FXML private TableColumn eventDateTableColumn;
 	@FXML private TableColumn eventStadiumTableColumn;
 	@FXML private TableColumn eventTypeTableColumn;
+	@FXML private TextField idTextField;
+	@FXML private TextField nameTextField;
+	@FXML private TextField dateTextField;
+	@FXML private TextField stadiumTextField;
+	@FXML private TextField typeTextField;
+	@FXML private Button addButton;
 	// Inject controller
 	@FXML private EventTabController eventTabController;
 	
