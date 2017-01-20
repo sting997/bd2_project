@@ -1,5 +1,8 @@
 package bd2;
 
+import java.util.Iterator;
+import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,18 +12,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.cfg.Configuration;
 
 @Entity
 @Table(name="klienci")
 public class Customer {
 	private int id;
-	private byte[] firstName;
-	private byte[] secondName;
+	private String firstName;
+	private String secondName;
 	private Adress adress;
-	private byte[] phoneNumer;
-	private byte[] email;
-	private byte[] bankAccount;
+	private String phoneNumer;
+	private String email;
+	private String bankAccount;
 	private ClientType clientType;
 	private float discount;
 
@@ -36,23 +45,29 @@ public class Customer {
 	}
 	@Basic
 	@Column(name="imie")
-	public byte[] getFirstName() {
+	@ColumnTransformer(
+			  read="AES_DECRYPT(imie, 'pingantoniak')", 
+			  write="AES_ENCRYPT(?, 'pingantoniak')")
+	public String getFirstName() {
 		return firstName;
 	}
-	public void setFirstName(byte[] firstName) {
+	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 	
 	@Basic
 	@Column(name="nazwisko")
-	public byte[] getSecondName() {
+	@ColumnTransformer(
+			  read="AES_DECRYPT(nazwisko, 'pingantoniak')", 
+			  write="AES_ENCRYPT(?, 'pingantoniak')")
+	public String getSecondName() {
 		return secondName;
 	}
-	public void setSecondName(byte[] secondName) {
+	public void setSecondName(String secondName) {
 		this.secondName = secondName;
 	}
 	@ManyToOne
-	@JoinColumn(name="adresy_id_adresu")
+	@JoinColumn(name="adres_id_adresu")
 	public Adress getAdress() {
 		return adress;
 	}
@@ -61,26 +76,35 @@ public class Customer {
 	}
 	@Basic
 	@Column(name="telefon")
-	public byte[] getPhoneNumer() {
+//	@ColumnTransformer(
+//			  read="AES_DECRYPT(phoneNumer, 'pingantoniak')", 
+//			  write="AES_ENCRYPT(?, 'pingantoniak')")
+	public String getPhoneNumer() {
 		return phoneNumer;
 	}
-	public void setPhoneNumer(byte[] phoneNumer) {
+	public void setPhoneNumer(String phoneNumer) {
 		this.phoneNumer = phoneNumer;
 	}
 	@Basic
 	@Column(name="email")
-	public byte[] getEmail() {
+//	@ColumnTransformer(
+//			  read="AES_DECRYPT(email, 'pingantoniak')", 
+//			  write="AES_ENCRYPT(?, 'pingantoniak')")
+	public String getEmail() {
 		return email;
 	}
-	public void setEmail(byte[] email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 	@Basic
 	@Column(name="numer_konta")
-	public byte[] getBankAccount() {
+//	@ColumnTransformer(
+//			  read="AES_DECRYPT(numer_konta, 'pingantoniak')", 
+//			  write="AES_ENCRYPT(?, 'pingantoniak')")
+	public String getBankAccount() {
 		return bankAccount;
 	}
-	public void setBankAccount(byte[] bankAccount) {
+	public void setBankAccount(String bankAccount) {
 		this.bankAccount = bankAccount;
 	}
 	@ManyToOne
@@ -99,5 +123,35 @@ public class Customer {
 		this.discount = discount;
 	}
 	
+	public static void main(String[] args) {
+		SessionFactory factory;
+		try {
+			factory = new Configuration().configure("/resources/hibernate.cfg.xml").buildSessionFactory();
+		} catch (Throwable ex) {
+			System.err.println("Failed to create sessionFactory object." + ex);
+			throw new ExceptionInInitializerError(ex);
+		}
+		
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try{
+			tx = session.beginTransaction();
+			List adresses = session.createQuery("FROM Customer").list();
+			for (Iterator iterator =adresses.iterator(); iterator.hasNext();){
+				Customer adress = (Customer) iterator.next();
+				System.out.print(adress.getId() + " ");
+				System.out.print(adress.getFirstName() + " ");
+				System.out.println(adress.getSecondName());
+			}
+			tx.commit();
+		}catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		factory.close();
+	}
 	
 }
