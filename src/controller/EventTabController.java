@@ -84,7 +84,7 @@ public class EventTabController {
 			byte stadiumId = Byte.parseByte(stadiumTextField.getText());
 			byte typeId = Byte.parseByte(typeTextField.getText());
 			String name = nameTextField.getText();
-			DateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date;
 			try {
 				date = dateFormat.parse(dateTextField.getText());

@@ -1,6 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -36,6 +39,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -44,25 +48,15 @@ public class SeatTabController {
 	@FXML
 	private TableView<Seat> seatTableView;
 	@FXML
-	private TableColumn seatIdTableColumn;
+	private TableColumn<Seat, Integer> seatIdTableColumn;
 	@FXML
 	private TableColumn<Seat, Sector> seatSectorTableColumn;
 	@FXML
-	private TableColumn seatRowNumberTableColumn;
+	private TableColumn<Seat, Integer> seatRowNumberTableColumn;
 	@FXML
-	private TableColumn seatNumberTableColumn;
+	private TableColumn<Seat, Integer> seatNumberTableColumn;
 	@FXML
 	private Tab seatTab;
-	// @FXML
-	// private TextField idTextField;
-	// @FXML
-	// private TextField nameTextField;
-	// @FXML
-	// private TextField dateTextField;
-	// @FXML
-	// private TextField stadiumTextField;
-	// @FXML
-	// private TextField typeTextField;
 	@FXML
 	private Button addSeatButton;
 	@FXML
@@ -79,22 +73,55 @@ public class SeatTabController {
 		deleteSeatButton.setOnAction((ActionEvent event) -> {
 			handleDelete();
 		});
+		editSeatButton.setOnAction((ActionEvent event) -> {
+			// TODO handler
+		});
 	}
 
+
 	private void handleAdd() {
-		// TODO
-		Parent root;
-		// root =
-		// FXMLLoader.load(getClass().getClassLoader().getResource("path/to/other/view.fxml"),
-		// resources);
-		GridPane grid = new GridPane();
+		HBox root = new HBox();
+		TextField sectorTextField = new TextField("Sector id");
+		TextField rowNumberTextField = new TextField("Row Number");
+		TextField seatNumberTextField = new TextField("Seat Number");
+		Button addButton = new Button("Add");
+		root.getChildren().add(sectorTextField);
+		root.getChildren().add(rowNumberTextField);
+		root.getChildren().add(seatNumberTextField);
+		root.getChildren().add(addButton);
+		
+		addButton.setOnAction((ActionEvent event) -> {
+			byte sectorId = Byte.parseByte(sectorTextField.getText());
+			int rowNumber = Integer.parseInt(rowNumberTextField.getText());
+			int seatNumber = Integer.parseInt(seatNumberTextField.getText());
+			Session session = factory.openSession();
+			Transaction tx = null;
+			try {
+				tx = session.beginTransaction();
+				Sector sector =(Sector)session.get(Sector.class, sectorId);
+				Seat newSeat = new Seat();
+				newSeat.setSector(sector);
+				newSeat.setRowNumber(rowNumber);
+				newSeat.setSeatNumber(seatNumber);
+				Integer newSeatId = (Integer) session.save(newSeat);
+				tx.commit();
+				seatTableView.getItems().add(newSeat);
+			} catch (HibernateException e) {
+				if (tx != null)
+					tx.rollback();
+				//TODO print some info
+				e.printStackTrace();
+			} finally {
+				session.close();
+			}
+		});
+		
 		Stage stage = new Stage();
-		stage.setTitle("Adding new seat");
-		stage.setScene(new Scene(grid, 450, 450));
+		stage.setTitle("Add Event");
+		stage.setScene(new Scene(root));
 		stage.show();
 
 	}
-
 	private void handleDelete() {
 		int selectedIndex = seatTableView.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
@@ -118,10 +145,10 @@ public class SeatTabController {
 	}
 
 	private void loadData() {
-		seatIdTableColumn.setCellValueFactory(new PropertyValueFactory<Seat, String>("id"));
+		seatIdTableColumn.setCellValueFactory(new PropertyValueFactory<Seat, Integer>("id"));
 		seatSectorTableColumn.setCellValueFactory(new PropertyValueFactory<Seat, Sector>("sector"));
-		seatRowNumberTableColumn.setCellValueFactory(new PropertyValueFactory<Seat, String>("rowNumber"));
-		seatNumberTableColumn.setCellValueFactory(new PropertyValueFactory<Seat, String>("seatNumber"));
+		seatRowNumberTableColumn.setCellValueFactory(new PropertyValueFactory<Seat, Integer>("rowNumber"));
+		seatNumberTableColumn.setCellValueFactory(new PropertyValueFactory<Seat, Integer>("seatNumber"));
 		;
 
 		try {

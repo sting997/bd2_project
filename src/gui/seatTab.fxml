@@ -56,16 +56,4 @@
 			</opaqueInsets>
 		</VBox>
 	</left>
-<!-- 	<bottom> -->
-<!-- 		<HBox alignment="BASELINE_CENTER"  -->
-<!-- 			BorderPane.alignment="CENTER"> -->
-<!-- 			<children> -->
-<!-- 				<TextField fx:id="idTextField" promptText="Id" /> -->
-<!-- 				<TextField fx:id="sectorTextField" promptText="Sector"/> -->
-<!-- 				<TextField fx:id="rowNumberTextField" promptText="Row Number"/> -->
-<!-- 				<TextField fx:id="seatNumberTextField" promptText="Seat Number"/> -->
-<!-- 				<Button minWidth="-Infinity" mnemonicParsing="false" text="Add" /> -->
-<!-- 			</children> -->
-<!-- 		</HBox> -->
-<!-- 	</bottom> -->
 </BorderPane>
