@@ -25,6 +25,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -33,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -56,7 +58,7 @@ public class SeatTabController {
 	private Button editSeatButton;
 	@FXML
 	private Button deleteSeatButton;
-
+	@FXML private Label infoLabel;
 	@FXML
 	public void initialize() {
 		loadData();
@@ -69,9 +71,11 @@ public class SeatTabController {
 		editSeatButton.setOnAction((ActionEvent event) -> {
 			handleEdit();
 		});
+		infoLabel.setTextFill(Color.FIREBRICK);
 	}
 
 	private void handleAdd() {
+		infoLabel.setText("");
 		HBox root = new HBox();
 		TextField sectorTextField = new TextField("Sector id");
 		TextField rowNumberTextField = new TextField("Row Number");
@@ -102,13 +106,12 @@ public class SeatTabController {
 				} catch (HibernateException e) {
 					if (tx != null)
 						tx.rollback();
-					// TODO print some info
-					e.printStackTrace();
+						infoLabel.setText("Error");
 				} finally {
 					session.close();
 				}
 			} catch (NumberFormatException e) {
-				// TODO: handle exception
+				infoLabel.setText("Error");
 			}
 		});
 
@@ -120,6 +123,7 @@ public class SeatTabController {
 	}
 
 	private void handleDelete() {
+		infoLabel.setText("");
 		int selectedIndex = seatTableView.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			Seat seat = seatTableView.getItems().get(selectedIndex);
@@ -133,16 +137,18 @@ public class SeatTabController {
 			} catch (HibernateException e) {
 				if (tx != null)
 					tx.rollback();
-				// TODO jakos na ekranie pieknie pokazac info ze sie nie da
-				e.printStackTrace();
-			} finally {
+				infoLabel.setText("Error");
+			} catch (Exception e) {
+				infoLabel.setText("Error");
+			} 
+			finally {
 				session.close();
 			}
 		}
 	}
 
 	private void handleEdit() {
-
+		infoLabel.setText("");
 		int selectedIndex = seatTableView.getSelectionModel().getSelectedIndex();
 
 		if (selectedIndex >= 0) {
@@ -179,14 +185,12 @@ public class SeatTabController {
 					} catch (HibernateException e) {
 						if (tx != null)
 							tx.rollback();
-						// TODO: info ze cos sie zepsulo nie bylo mnie slychac
-						e.printStackTrace();
+						infoLabel.setText("Error");
 					} finally {
 						session.close();
 					}
 				} catch (NumberFormatException e) {
-					// TODO no zle ktus wpisal numerek w pole :(
-					System.out.println("LIPA");
+					infoLabel.setText("Error");
 				}
 			});
 
@@ -195,16 +199,8 @@ public class SeatTabController {
 			stage.setScene(new Scene(root));
 			stage.show();
 		}
-	}/*
-		 * public void updateEmployee(Integer EmployeeID, int salary ){ Session
-		 * session = factory.openSession(); Transaction tx = null; try{ tx =
-		 * session.beginTransaction(); Employee employee =
-		 * (Employee)session.get(Employee.class, EmployeeID);
-		 * employee.setSalary( salary ); session.update(employee); tx.commit();
-		 * }catch (HibernateException e) { if (tx!=null) tx.rollback();
-		 * e.printStackTrace(); }finally { 65Hibernate session.close(); } }
-		 */
-
+	}
+	
 	private void loadData() {
 		seatIdTableColumn.setCellValueFactory(new PropertyValueFactory<Seat, Integer>("id"));
 		seatSectorTableColumn.setCellValueFactory(new PropertyValueFactory<Seat, Sector>("sector"));
