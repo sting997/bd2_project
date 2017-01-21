@@ -118,6 +118,11 @@ public class Customer {
 		this.discount = discount;
 	}
 	
+	@Override
+	public String toString(){
+		return ("" +this.getId());
+	}
+	
 	public static void main(String[] args) {
 		SessionFactory factory;
 		try {

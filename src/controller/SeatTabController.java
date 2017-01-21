@@ -155,9 +155,9 @@ public class SeatTabController {
 			Seat seat = seatTableView.getItems().get(selectedIndex);
 
 			HBox root = new HBox();
-			TextField sectorTextField = new TextField("Sector id");
-			TextField rowNumberTextField = new TextField("Row Number");
-			TextField seatNumberTextField = new TextField("Seat Number");
+			TextField sectorTextField = new TextField("" + seat.getSector().getId());
+			TextField rowNumberTextField = new TextField("" + seat.getRowNumber());
+			TextField seatNumberTextField = new TextField("" + seat.getSeatNumber());
 			Button editButton = new Button("Edit");
 			root.getChildren().add(sectorTextField);
 			root.getChildren().add(rowNumberTextField);
