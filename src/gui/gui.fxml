@@ -88,6 +88,12 @@
                		<fx:include fx:id="seatTab" source="seatTab.fxml"/>
                </content>
             </Tab>
+            <Tab text="EventType">
+               <content>
+               		<fx:include fx:id="eventTypeTab" source="eventTypeTab.fxml"/>
+               </content>
+            </Tab>
+            
         </tabs>
       </TabPane>
    </center>
