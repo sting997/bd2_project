@@ -306,5 +306,9 @@ public class CustomerTabController {
 
 		// factory.close();
 	}
+	public void close() {
+		factory.close();
+		System.out.println("factory closed");		
+	}
 
 }
