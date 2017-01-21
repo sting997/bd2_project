@@ -349,9 +349,23 @@ CREATE TRIGGER `crypt_trg` BEFORE INSERT ON `klienci`
 FOR EACH ROW
 BEGIN
     SET new.imie = AES_ENCRYPT(new.imie, 'pingantoniak');
-    SET new.nazwisko := AES_ENCRYPT(new.nazwisko, 'pingantoniak');
+    SET new.nazwisko = AES_ENCRYPT(new.nazwisko, 'pingantoniak');
     SET new.telefon = AES_ENCRYPT(new.telefon, 'pingantoniak');
     SET new.email = AES_ENCRYPT(new.email, 'pingantoniak');
+    SET new.numer_konta = AES_ENCRYPT(new.numer_konta, 'pingantoniak');
+    SET new.photo = AES_ENCRYPT(new.photo, 'pingantoniak');
+ END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER `crypt_trg2` BEFORE UPDATE ON `klienci`
+FOR EACH ROW
+BEGIN
+    SET new.imie = AES_ENCRYPT(new.imie, 'pingantoniak');
+    SET new.nazwisko = AES_ENCRYPT(new.nazwisko, 'pingantoniak');
+    SET new.telefon = AES_ENCRYPT(new.telefon, 'pingantoniak');
+    SET new.email = AES_ENCRYPT(new.email, 'pingantoniak');
+    SET new.numer_konta = AES_ENCRYPT(new.numer_konta, 'pingantoniak');
     SET new.photo = AES_ENCRYPT(new.photo, 'pingantoniak');
  END$$
 DELIMITER ;
