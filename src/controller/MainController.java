@@ -21,8 +21,10 @@ public class MainController {
 	@FXML private SeatTabController seatTabController;
 	@FXML private CarnetTabController carnetTabController;
 	@FXML private EventTypeTabController eventTypeTabController;
-	//@FXML private TicketTabController ticketTabController;
+	@FXML private TicketTabController ticketTabController;
 	@FXML private MenuItem closeMenuItem;
+	
+	@FXML
 	private void initialize() {
 		closeMenuItem.setOnAction((ActionEvent event) -> {
 			handleClose();
@@ -35,7 +37,7 @@ public class MainController {
 		customerTabController.close();
 		carnetTabController.close();
 		eventTypeTabController.close();
-		//ticketTabController.close();
+		ticketTabController.close();
 
 		Platform.exit();
 	}

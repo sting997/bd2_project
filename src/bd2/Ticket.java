@@ -55,7 +55,7 @@ public class Ticket {
 		this.seat = seat;
 	}
 	@ManyToOne
-	@JoinColumn(name="wydarzenia_id_wydarzenia")
+	@JoinColumn(name="wydarzenie_id_wydarzenia")
 	public Event getEvent() {
 		return event;
 	}
