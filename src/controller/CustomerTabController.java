@@ -101,6 +101,8 @@ public class CustomerTabController {
 		TextField adressTextField = new TextField("Address");
 		TextField discountTextField = new TextField("Discount");
 		TextField bankAccountTextField = new TextField("Bank Account");
+		
+		
 
 		Button addButton = new Button("Add");
 		root.getChildren().add(firstNameTextField);
@@ -198,14 +200,14 @@ public class CustomerTabController {
 			Customer customer = customerTableView.getItems().get(selectedIndex);
 
 			HBox root = new HBox();
-			TextField firstNameTextField = new TextField("First Name");
-			TextField secondNameTextField = new TextField("Second Name");
-			TextField clientTypeTextField = new TextField("Client Type");
-			TextField phoneNumberTextField = new TextField("Phone Number");
-			TextField emailTextField = new TextField("Email");
-			TextField adressTextField = new TextField("Address");
-			TextField discountTextField = new TextField("Discount");
-			TextField bankAccountTextField = new TextField("Bank Account");
+			TextField firstNameTextField = new TextField(customer.getFirstName());
+			TextField secondNameTextField = new TextField(customer.getSecondName());
+			TextField clientTypeTextField = new TextField("" + customer.getClientType().getId());
+			TextField phoneNumberTextField = new TextField(customer.getPhoneNumer());
+			TextField emailTextField = new TextField(customer.getEmail());
+			TextField adressTextField = new TextField("" + customer.getAdress().getId());
+			TextField discountTextField = new TextField("" + customer.getDiscount());
+			TextField bankAccountTextField = new TextField(customer.getBankAccount());
 			
 			Button editButton = new Button("Edit");
 			root.getChildren().add(firstNameTextField);
