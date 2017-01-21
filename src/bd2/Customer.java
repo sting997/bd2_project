@@ -46,8 +46,7 @@ public class Customer {
 	@Basic
 	@Column(name="imie")
 	@ColumnTransformer(
-			  read="AES_DECRYPT(imie, 'pingantoniak')", 
-			  write="AES_ENCRYPT(?, 'pingantoniak')")
+			  read="AES_DECRYPT(imie, 'pingantoniak')")
 	public String getFirstName() {
 		return firstName;
 	}
@@ -58,8 +57,7 @@ public class Customer {
 	@Basic
 	@Column(name="nazwisko")
 	@ColumnTransformer(
-			  read="AES_DECRYPT(nazwisko, 'pingantoniak')", 
-			  write="AES_ENCRYPT(?, 'pingantoniak')")
+			  read="AES_DECRYPT(nazwisko, 'pingantoniak')")
 	public String getSecondName() {
 		return secondName;
 	}
@@ -76,9 +74,8 @@ public class Customer {
 	}
 	@Basic
 	@Column(name="telefon")
-//	@ColumnTransformer(
-//			  read="AES_DECRYPT(phoneNumer, 'pingantoniak')", 
-//			  write="AES_ENCRYPT(?, 'pingantoniak')")
+	@ColumnTransformer(
+			  read="AES_DECRYPT(telefon, 'pingantoniak')")
 	public String getPhoneNumer() {
 		return phoneNumer;
 	}
@@ -87,9 +84,8 @@ public class Customer {
 	}
 	@Basic
 	@Column(name="email")
-//	@ColumnTransformer(
-//			  read="AES_DECRYPT(email, 'pingantoniak')", 
-//			  write="AES_ENCRYPT(?, 'pingantoniak')")
+	@ColumnTransformer(
+		  read="AES_DECRYPT(email, 'pingantoniak')") 
 	public String getEmail() {
 		return email;
 	}
@@ -98,9 +94,8 @@ public class Customer {
 	}
 	@Basic
 	@Column(name="numer_konta")
-//	@ColumnTransformer(
-//			  read="AES_DECRYPT(numer_konta, 'pingantoniak')", 
-//			  write="AES_ENCRYPT(?, 'pingantoniak')")
+	@ColumnTransformer(
+			  read="AES_DECRYPT(numer_konta, 'pingantoniak')")
 	public String getBankAccount() {
 		return bankAccount;
 	}

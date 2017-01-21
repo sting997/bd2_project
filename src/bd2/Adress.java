@@ -74,6 +74,12 @@ public class Adress {
 		this.flatNumber = flatNumber;
 	}
 	
+	@Override
+	public String toString(){
+		String output = this.getCity() + " " + this.getStreet();
+		return output;
+	}
+	
 	public static void main(String[] args) {
 		SessionFactory factory;
 		try {

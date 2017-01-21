@@ -33,5 +33,10 @@ public class ClientType {
 		this.type = type;
 	}
 	
+	@Override
+	public String toString(){
+		return this.getType();
+	}
+	
 	
 }
