@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,12 +15,14 @@ import org.hibernate.cfg.Configuration;
 import bd2.Event;
 import bd2.EventType;
 import bd2.Stadium;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -39,7 +40,7 @@ public class EventTabController {
 	@FXML
 	private TableColumn<Event, String> eventNameTableColumn;
 	@FXML
-	private TableColumn<Event, Date> eventDateTableColumn;
+	private TableColumn<Event, String> eventDateTableColumn;
 	@FXML
 	private TableColumn<Event, Stadium> eventStadiumTableColumn;
 	@FXML
@@ -52,6 +53,8 @@ public class EventTabController {
 	private Button editEventButton;
 	@FXML
 	private Button deleteEventButton;
+	@FXML
+	Label infoLabel;
 
 	@FXML
 	public void initialize() {
@@ -63,8 +66,67 @@ public class EventTabController {
 			handleDelete();
 		});
 		editEventButton.setOnAction((ActionEvent event) -> {
-			// TODO handler
+			handleEdit();
 		});
+	}
+
+	private void handleEdit() {
+		int selectedIndex = eventTableView.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			Event newEvent = eventTableView.getItems().get(selectedIndex);
+			HBox root = new HBox();
+			TextField nameTextField = new TextField(newEvent.getName());
+			TextField dateTextField = new TextField("" + newEvent.getDate());
+			TextField stadiumTextField = new TextField("" + newEvent.getStadium().getId());
+			TextField typeTextField = new TextField("" + newEvent.getEventType().getId());
+			Button editButton = new Button("Edit");
+			root.getChildren().add(nameTextField);
+			root.getChildren().add(dateTextField);
+			root.getChildren().add(stadiumTextField);
+			root.getChildren().add(typeTextField);
+			root.getChildren().add(editButton);
+
+			editButton.setOnAction((ActionEvent event) -> {
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date date;
+				try {
+					byte stadiumId = Byte.parseByte(stadiumTextField.getText());
+					byte typeId = Byte.parseByte(typeTextField.getText());
+					String name = nameTextField.getText();
+					date = dateFormat.parse(dateTextField.getText());
+					Session session = factory.openSession();
+					Transaction tx = null;
+					try {
+						tx = session.beginTransaction();
+						Stadium stadium = (Stadium) session.get(Stadium.class, stadiumId);
+						EventType eventType = (EventType) session.get(EventType.class, typeId);
+						newEvent.setName(name);
+						newEvent.setDate(date);
+						newEvent.setStadium(stadium);
+						newEvent.setEventType(eventType);
+						session.update(newEvent);
+						tx.commit();
+						eventTableView.getItems().set(selectedIndex, newEvent);
+					} catch (HibernateException e) {
+						if (tx != null)
+							tx.rollback();
+						infoLabel.setText("Error");
+					} finally {
+						session.close();
+					}
+				} catch (NumberFormatException nfx) {
+					infoLabel.setText("Error");
+				} catch (ParseException e) {
+					infoLabel.setText("Error");
+				}
+
+			});
+
+			Stage stage = new Stage();
+			stage.setTitle("Add Event");
+			stage.setScene(new Scene(root));
+			stage.show();
+		}
 	}
 
 	private void handleAdd() {
@@ -79,7 +141,7 @@ public class EventTabController {
 		root.getChildren().add(stadiumTextField);
 		root.getChildren().add(typeTextField);
 		root.getChildren().add(addButton);
-		
+
 		addButton.setOnAction((ActionEvent event) -> {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date;
@@ -92,7 +154,7 @@ public class EventTabController {
 				Transaction tx = null;
 				try {
 					tx = session.beginTransaction();
-					Stadium stadium =(Stadium)session.get(Stadium.class, stadiumId);
+					Stadium stadium = (Stadium) session.get(Stadium.class, stadiumId);
 					EventType eventType = (EventType) session.get(EventType.class, typeId);
 					Event newEvent = new Event();
 					newEvent.setName(name);
@@ -105,19 +167,17 @@ public class EventTabController {
 				} catch (HibernateException e) {
 					if (tx != null)
 						tx.rollback();
-					//TODO print some info
-					e.printStackTrace();
+					infoLabel.setText("Error");
 				} finally {
 					session.close();
 				}
-			}catch (NumberFormatException nfx) {
-				// TODO: handle exception
-			}catch (ParseException e) {
-				//TODO print some info
-				e.printStackTrace();
+			} catch (NumberFormatException nfx) {
+				infoLabel.setText("Error");
+			} catch (ParseException e) {
+				infoLabel.setText("Error");
 			}
 		});
-		
+
 		Stage stage = new Stage();
 		stage.setTitle("Add Event");
 		stage.setScene(new Scene(root));
@@ -139,8 +199,7 @@ public class EventTabController {
 			} catch (HibernateException e) {
 				if (tx != null)
 					tx.rollback();
-				// TODO jakos na ekranie pieknie pokazac info ze sie nie da
-				e.printStackTrace();
+				infoLabel.setText("Error");
 			} finally {
 				session.close();
 			}
@@ -150,10 +209,16 @@ public class EventTabController {
 	private void loadData() {
 		eventIdTableColumn.setCellValueFactory(new PropertyValueFactory<Event, Integer>("id"));
 		eventNameTableColumn.setCellValueFactory(new PropertyValueFactory<Event, String>("name"));
-		eventDateTableColumn.setCellValueFactory(new PropertyValueFactory<Event, Date>("date"));
+		eventDateTableColumn.setCellValueFactory(event -> {
+			SimpleStringProperty property = new SimpleStringProperty();
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			property.setValue(df.format(event.getValue().getDate()));
+			return property;
+		});
 		eventStadiumTableColumn.setCellValueFactory(new PropertyValueFactory<Event, Stadium>("stadium"));
 		eventTypeTableColumn.setCellValueFactory(new PropertyValueFactory<Event, EventType>("eventType"));
 
+		
 		try {
 			factory = new Configuration().configure("/resources/hibernate.cfg.xml").buildSessionFactory();
 		} catch (Throwable ex) {
@@ -176,14 +241,11 @@ public class EventTabController {
 		} finally {
 			session.close();
 		}
-		//TODO factory needs to be closed at the end of programme
-		//otherwise the programme does not stop and needs to be terminated manually
-		// factory.close();
 	}
 
 	public void close() {
 		factory.close();
-		System.out.println("factory closed");		
+		System.out.println("factory closed");
 	}
 
 }
