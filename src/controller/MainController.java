@@ -18,10 +18,15 @@ public class MainController {
 
 	@FXML private EventTabController eventTabController;
 	@FXML private CustomerTabController customerTabController;
+	@FXML private ClientTypeTabController clientTypeTabController;
 	@FXML private SeatTabController seatTabController;
 	@FXML private CarnetTabController carnetTabController;
 	@FXML private EventTypeTabController eventTypeTabController;
 	@FXML private TicketTabController ticketTabController;
+	@FXML private TicketStatusTabController ticketStatusTabController;
+	@FXML private SectorTabController sectorTabController;
+	@FXML private SectorTypeTabController sectorTypeTabController;
+	@FXML private PriceTabController priceTabController;
 	@FXML private MenuItem closeMenuItem;
 	
 	@FXML
@@ -35,10 +40,15 @@ public class MainController {
 		eventTabController.close();
 		seatTabController.close();
 		customerTabController.close();
+		clientTypeTabController.close();
 		carnetTabController.close();
 		eventTypeTabController.close();
 		ticketTabController.close();
-
+		ticketStatusTabController.close();
+		sectorTypeTabController.close();
+		sectorTabController.close();
+		priceTabController.close();
+		
 		Platform.exit();
 	}
 }

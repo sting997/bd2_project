@@ -30,6 +30,11 @@
                		<fx:include fx:id="customerTab" source="customerTab.fxml"/>
                </content>
             </Tab>
+            <Tab text="ClientType">
+               <content>
+               		<fx:include fx:id="clientTypeTab" source="clientTypeTab.fxml"/>
+               </content>
+            </Tab>
             <Tab text="Event">
                <content>
                		<fx:include fx:id="eventTab" source="eventTab.fxml"/>
@@ -54,7 +59,27 @@
                <content>
                		<fx:include fx:id="ticketTab" source="TicketTab.fxml"/>
                </content>
-            </Tab>            
+            </Tab>
+            <Tab text="TicketStatus">
+               <content>
+               		<fx:include fx:id="ticketStatusTab" source="ticketStatusTab.fxml"/>
+               </content>
+            </Tab>
+            <Tab text="Sector">
+               <content>
+               		<fx:include fx:id="sectorTab" source="sectorTab.fxml"/>
+               </content>
+            </Tab>
+            <Tab text="SectorType">
+               <content>
+               		<fx:include fx:id="sectorTypeTab" source="sectorTypeTab.fxml"/>
+               </content>
+            </Tab>
+            <Tab text="Price">
+               <content>
+               		<fx:include fx:id="priceTab" source="priceTab.fxml"/>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </center>

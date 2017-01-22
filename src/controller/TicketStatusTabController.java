@@ -13,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import bd2.TicketStatus;
 import bd2.Event;
 import bd2.EventType;
 import bd2.Seat;
@@ -34,34 +35,34 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class EventTypeTabController {
+public class TicketStatusTabController {
 	private SessionFactory factory;
 	@FXML
-	private TableView<EventType> eventTypeTableView;
+	private TableView<TicketStatus> ticketStatusTableView;
 	@FXML
-	private TableColumn<EventType, Integer> eventTypeIdTableColumn;
+	private TableColumn<TicketStatus, Integer> ticketStatusIdTableColumn;
 	@FXML
-	private TableColumn<EventType, String> eventTypeNameTableColumn;
+	private TableColumn<TicketStatus, String> ticketStatusNameTableColumn;
 	@FXML
-	private Tab eventTypeTab;
+	private Tab ticketStatusTab;
 	@FXML
-	private Button addEventTypeButton;
+	private Button addTicketStatusButton;
 	@FXML
-	private Button editEventTypeButton;
+	private Button editTicketStatusButton;
 	@FXML
-	private Button deleteEventTypeButton;
+	private Button deleteTicketStatusButton;
 	@FXML private Label infoLabel;
 
 	@FXML
 	public void initialize() {
 		loadData();
-		addEventTypeButton.setOnAction((ActionEvent event) -> {
+		addTicketStatusButton.setOnAction((ActionEvent event) -> {
 			handleAdd();
 		});
-		deleteEventTypeButton.setOnAction((ActionEvent event) -> {
+		deleteTicketStatusButton.setOnAction((ActionEvent event) -> {
 			handleDelete();
 		});
-		editEventTypeButton.setOnAction((ActionEvent event) -> {
+		editTicketStatusButton.setOnAction((ActionEvent event) -> {
 			handleEdit();
 		});
 		infoLabel.setTextFill(Color.FIREBRICK);
@@ -70,23 +71,23 @@ public class EventTypeTabController {
 	private void handleAdd() {
 		infoLabel.setText("");
 		HBox root = new HBox();
-		TextField nameTextField = new TextField("Name");
+		TextField statusTextField = new TextField("Status");
 		Button addButton = new Button("Add");
-		root.getChildren().add(nameTextField);
+		root.getChildren().add(statusTextField);
 		root.getChildren().add(addButton);
 		
 		addButton.setOnAction((ActionEvent event) -> {
 			try {
-				String name = nameTextField.getText();
+				String status = statusTextField.getText();
 				Session session = factory.openSession();
 				Transaction tx = null;
 				try {
 					tx = session.beginTransaction();
-					EventType newEventType = new EventType();
-					newEventType.setTypeName(name);
-					Integer newEventTypeId = (Integer) session.save(newEventType);
+					TicketStatus newTicketStatus = new TicketStatus();
+					newTicketStatus.setStatus(status);
+					Integer newTicketStatusId = (Integer) session.save(newTicketStatus);
 					tx.commit();
-					eventTypeTableView.getItems().add(newEventType);
+					ticketStatusTableView.getItems().add(newTicketStatus);
 				} catch (HibernateException e) {
 					if (tx != null)
 						tx.rollback();
@@ -101,7 +102,7 @@ public class EventTypeTabController {
 		});
 		
 		Stage stage = new Stage();
-		stage.setTitle("Add Event Type");
+		stage.setTitle("Add Ticket Status");
 		stage.setScene(new Scene(root));
 		stage.show();
 
@@ -109,16 +110,16 @@ public class EventTypeTabController {
 
 	private void handleDelete() {
 		infoLabel.setText("");
-		int selectedIndex = eventTypeTableView.getSelectionModel().getSelectedIndex();
+		int selectedIndex = ticketStatusTableView.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			EventType eventType = eventTypeTableView.getItems().get(selectedIndex);
+			TicketStatus ticketStatus = ticketStatusTableView.getItems().get(selectedIndex);
 			Session session = factory.openSession();
 			Transaction tx = null;
 			try {
 				tx = session.beginTransaction();
-				session.delete(eventType);
+				session.delete(ticketStatus);
 				tx.commit();
-				eventTypeTableView.getItems().remove(selectedIndex);
+				ticketStatusTableView.getItems().remove(selectedIndex);
 			} catch (HibernateException e) {
 				if (tx != null)
 					tx.rollback();
@@ -135,29 +136,29 @@ public class EventTypeTabController {
 	
 	private void handleEdit() {
 		infoLabel.setText("");
-		int selectedIndex = eventTypeTableView.getSelectionModel().getSelectedIndex();
+		int selectedIndex = ticketStatusTableView.getSelectionModel().getSelectedIndex();
 
 		if (selectedIndex >= 0) {
-		EventType eventType = eventTypeTableView.getItems().get(selectedIndex);
+		TicketStatus ticketStatus = ticketStatusTableView.getItems().get(selectedIndex);
 
 			HBox root = new HBox();
-			TextField nameTextField = new TextField("" + eventType.getTypeName());
+			TextField statusTextField = new TextField("" + ticketStatus.getStatus());
 			Button editButton = new Button("Edit");
-			root.getChildren().add(nameTextField);
+			root.getChildren().add(statusTextField);
 			root.getChildren().add(editButton);
 
 			editButton.setOnAction((ActionEvent event) -> {
 				try {
-					String name = nameTextField.getText();
+					String status = statusTextField.getText();
 
 					Session session = factory.openSession();
 					Transaction tx = null;
 					try {
 						tx = session.beginTransaction();
-						eventType.setTypeName(name);
-						session.update(eventType);
+						ticketStatus.setStatus(status);
+						session.update(ticketStatus);
 						tx.commit();
-						eventTypeTableView.getItems().set(selectedIndex, eventType);
+						ticketStatusTableView.getItems().set(selectedIndex, ticketStatus);
 
 					} catch (HibernateException e) {
 						if (tx != null)
@@ -172,15 +173,15 @@ public class EventTypeTabController {
 			});
 
 			Stage stage = new Stage();
-			stage.setTitle("Edit EventType");
+			stage.setTitle("Edit TicketStatus");
 			stage.setScene(new Scene(root));
 			stage.show();
 		}
 	}
 
 	private void loadData() {
-		eventTypeIdTableColumn.setCellValueFactory(new PropertyValueFactory<EventType, Integer>("id"));
-		eventTypeNameTableColumn.setCellValueFactory(new PropertyValueFactory<EventType, String>("typeName"));
+		ticketStatusIdTableColumn.setCellValueFactory(new PropertyValueFactory<TicketStatus, Integer>("id"));
+		ticketStatusNameTableColumn.setCellValueFactory(new PropertyValueFactory<TicketStatus, String>("status"));
 
 		try {
 			factory = new Configuration().configure("/resources/hibernate.cfg.xml").buildSessionFactory();
@@ -193,9 +194,9 @@ public class EventTypeTabController {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			List list = session.createQuery("FROM EventType").list();
-			ObservableList<EventType> data = FXCollections.observableList(list);
-			eventTypeTableView.setItems(data);
+			List list = session.createQuery("FROM TicketStatus").list();
+			ObservableList<TicketStatus> data = FXCollections.observableList(list);
+			ticketStatusTableView.setItems(data);
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx != null)

@@ -87,8 +87,6 @@ public class TicketTabController {
 	@FXML
 	public void initialize() {
 		loadData();
-		if (addTicketButton == null)
-			System.out.println("Hello, World");
 		addTicketButton.setOnAction((ActionEvent event) -> {
 			handleAdd();
 		});

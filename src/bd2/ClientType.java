@@ -12,7 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="typy_klientow")
 public class ClientType {
 	private int id;
-	String type;
+	String name;
 	
 	@Id
 	@Column(name="id_typu_klienta")
@@ -26,16 +26,16 @@ public class ClientType {
 	}
 	
 	@Column(name = "typ")
-	public String getType() {
-		return type;
+	public String getTypeName() {
+		return name;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public void setTypeName(String name) {
+		this.name = name;
 	}
 	
 	@Override
 	public String toString(){
-		return this.getType();
+		return this.getTypeName();
 	}
 	
 	

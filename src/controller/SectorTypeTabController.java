@@ -13,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import bd2.SectorType;
 import bd2.Event;
 import bd2.EventType;
 import bd2.Seat;
@@ -34,34 +35,34 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class EventTypeTabController {
+public class SectorTypeTabController {
 	private SessionFactory factory;
 	@FXML
-	private TableView<EventType> eventTypeTableView;
+	private TableView<SectorType> sectorTypeTableView;
 	@FXML
-	private TableColumn<EventType, Integer> eventTypeIdTableColumn;
+	private TableColumn<SectorType, Integer> sectorTypeIdTableColumn;
 	@FXML
-	private TableColumn<EventType, String> eventTypeNameTableColumn;
+	private TableColumn<SectorType, String> sectorTypeNameTableColumn;
 	@FXML
-	private Tab eventTypeTab;
+	private Tab sectorTypeTab;
 	@FXML
-	private Button addEventTypeButton;
+	private Button addSectorTypeButton;
 	@FXML
-	private Button editEventTypeButton;
+	private Button editSectorTypeButton;
 	@FXML
-	private Button deleteEventTypeButton;
+	private Button deleteSectorTypeButton;
 	@FXML private Label infoLabel;
 
 	@FXML
 	public void initialize() {
 		loadData();
-		addEventTypeButton.setOnAction((ActionEvent event) -> {
+		addSectorTypeButton.setOnAction((ActionEvent event) -> {
 			handleAdd();
 		});
-		deleteEventTypeButton.setOnAction((ActionEvent event) -> {
+		deleteSectorTypeButton.setOnAction((ActionEvent event) -> {
 			handleDelete();
 		});
-		editEventTypeButton.setOnAction((ActionEvent event) -> {
+		editSectorTypeButton.setOnAction((ActionEvent event) -> {
 			handleEdit();
 		});
 		infoLabel.setTextFill(Color.FIREBRICK);
@@ -82,11 +83,11 @@ public class EventTypeTabController {
 				Transaction tx = null;
 				try {
 					tx = session.beginTransaction();
-					EventType newEventType = new EventType();
-					newEventType.setTypeName(name);
-					Integer newEventTypeId = (Integer) session.save(newEventType);
+					SectorType newSectorType = new SectorType();
+					newSectorType.setTypeName(name);
+					Integer newSectorTypeId = (Integer) session.save(newSectorType);
 					tx.commit();
-					eventTypeTableView.getItems().add(newEventType);
+					sectorTypeTableView.getItems().add(newSectorType);
 				} catch (HibernateException e) {
 					if (tx != null)
 						tx.rollback();
@@ -101,7 +102,7 @@ public class EventTypeTabController {
 		});
 		
 		Stage stage = new Stage();
-		stage.setTitle("Add Event Type");
+		stage.setTitle("Add Client Type");
 		stage.setScene(new Scene(root));
 		stage.show();
 
@@ -109,16 +110,16 @@ public class EventTypeTabController {
 
 	private void handleDelete() {
 		infoLabel.setText("");
-		int selectedIndex = eventTypeTableView.getSelectionModel().getSelectedIndex();
+		int selectedIndex = sectorTypeTableView.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			EventType eventType = eventTypeTableView.getItems().get(selectedIndex);
+			SectorType sectorType = sectorTypeTableView.getItems().get(selectedIndex);
 			Session session = factory.openSession();
 			Transaction tx = null;
 			try {
 				tx = session.beginTransaction();
-				session.delete(eventType);
+				session.delete(sectorType);
 				tx.commit();
-				eventTypeTableView.getItems().remove(selectedIndex);
+				sectorTypeTableView.getItems().remove(selectedIndex);
 			} catch (HibernateException e) {
 				if (tx != null)
 					tx.rollback();
@@ -135,13 +136,13 @@ public class EventTypeTabController {
 	
 	private void handleEdit() {
 		infoLabel.setText("");
-		int selectedIndex = eventTypeTableView.getSelectionModel().getSelectedIndex();
+		int selectedIndex = sectorTypeTableView.getSelectionModel().getSelectedIndex();
 
 		if (selectedIndex >= 0) {
-		EventType eventType = eventTypeTableView.getItems().get(selectedIndex);
+		SectorType sectorType = sectorTypeTableView.getItems().get(selectedIndex);
 
 			HBox root = new HBox();
-			TextField nameTextField = new TextField("" + eventType.getTypeName());
+			TextField nameTextField = new TextField("" + sectorType.getTypeName());
 			Button editButton = new Button("Edit");
 			root.getChildren().add(nameTextField);
 			root.getChildren().add(editButton);
@@ -154,10 +155,10 @@ public class EventTypeTabController {
 					Transaction tx = null;
 					try {
 						tx = session.beginTransaction();
-						eventType.setTypeName(name);
-						session.update(eventType);
+						sectorType.setTypeName(name);
+						session.update(sectorType);
 						tx.commit();
-						eventTypeTableView.getItems().set(selectedIndex, eventType);
+						sectorTypeTableView.getItems().set(selectedIndex, sectorType);
 
 					} catch (HibernateException e) {
 						if (tx != null)
@@ -172,15 +173,15 @@ public class EventTypeTabController {
 			});
 
 			Stage stage = new Stage();
-			stage.setTitle("Edit EventType");
+			stage.setTitle("Edit SectorType");
 			stage.setScene(new Scene(root));
 			stage.show();
 		}
 	}
 
 	private void loadData() {
-		eventTypeIdTableColumn.setCellValueFactory(new PropertyValueFactory<EventType, Integer>("id"));
-		eventTypeNameTableColumn.setCellValueFactory(new PropertyValueFactory<EventType, String>("typeName"));
+		sectorTypeIdTableColumn.setCellValueFactory(new PropertyValueFactory<SectorType, Integer>("id"));
+		sectorTypeNameTableColumn.setCellValueFactory(new PropertyValueFactory<SectorType, String>("typeName"));
 
 		try {
 			factory = new Configuration().configure("/resources/hibernate.cfg.xml").buildSessionFactory();
@@ -193,9 +194,9 @@ public class EventTypeTabController {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			List list = session.createQuery("FROM EventType").list();
-			ObservableList<EventType> data = FXCollections.observableList(list);
-			eventTypeTableView.setItems(data);
+			List list = session.createQuery("FROM SectorType").list();
+			ObservableList<SectorType> data = FXCollections.observableList(list);
+			sectorTypeTableView.setItems(data);
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx != null)

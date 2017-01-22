@@ -47,7 +47,7 @@ public class Sector {
 	
 	@Override
 	public String toString() {
-		return this.sectorType.getTypeName();
+		return getSectorType().getTypeName();
 	}
 
 	

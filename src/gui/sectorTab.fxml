@@ -9,13 +9,14 @@
 
 <BorderPane prefHeight="200.0" prefWidth="200.0"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="controller.EventTypeTabController">
+	fx:controller="controller.SectorTabController">
 	<center>
-		<TableView fx:id="eventTypeTableView" prefHeight="200.0"
+		<TableView fx:id="sectorTableView" prefHeight="200.0"
 			prefWidth="200.0" BorderPane.alignment="CENTER">
 			<columns>
-				<TableColumn fx:id="eventTypeIdTableColumn" text="Id" />
-				<TableColumn fx:id="eventTypeNameTableColumn" text="Name" />
+				<TableColumn fx:id="sectorIdTableColumn" text="Id" />
+				<TableColumn fx:id="sectorStadiumTableColumn" text="Stadium" />
+				<TableColumn fx:id="sectorTypeTableColumn" text="Type" />
 			</columns>
 		</TableView>
 	</center>
@@ -28,20 +29,20 @@
 						<Insets top="10.0" />
 					</VBox.margin>
 				</Label>
-				<Button fx:id="addEventTypeButton" minHeight="-Infinity" minWidth="-Infinity"
+				<Button fx:id="addSectorButton" minHeight="-Infinity" minWidth="-Infinity"
 					mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Add">
 					<VBox.margin>
 						<Insets bottom="5.0" top="5.0" />
 					</VBox.margin>
 				</Button>
-				<Button fx:id="editEventTypeButton" layoutX="29.0" layoutY="53.0" minHeight="-Infinity"
+				<Button fx:id="editSectorButton" layoutX="29.0" layoutY="53.0" minHeight="-Infinity"
 					minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0"
 					prefWidth="62.0" text="Edit">
 					<VBox.margin>
 						<Insets bottom="5.0" top="5.0" />
 					</VBox.margin>
 				</Button>
-				<Button fx:id="deleteEventTypeButton" layoutX="29.0" layoutY="88.0" minHeight="-Infinity"
+				<Button fx:id="deleteSectorButton" layoutX="29.0" layoutY="88.0" minHeight="-Infinity"
 					minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0"
 					prefWidth="62.0" text="Delete">
 					<VBox.margin>

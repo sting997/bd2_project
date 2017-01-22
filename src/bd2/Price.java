@@ -30,7 +30,7 @@ public class Price {
 		this.id = id;
 	}
 	@ManyToOne
-	@JoinColumn(name="wydarzenia_id_wydarzenia")
+	@JoinColumn(name="wydarzenie_id_wydarzenia")
 	public Event getEvent() {
 		return event;
 	}

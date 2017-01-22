@@ -52,7 +52,7 @@ public class Seat {
 	
 	@Override
 	public String toString() {
-		return "" + sector + " " + rowNumber + " " + seatNumber;
+		return sector + " " + rowNumber + " " + seatNumber;
 	}
 	
 }
