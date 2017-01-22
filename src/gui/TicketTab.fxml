@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.HBox?>
+
+
+<BorderPane prefHeight="200.0" prefWidth="200.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.TicketTabController">
+	<center>
+		<TableView fx:id="ticketTableView" prefHeight="200.0"
+			prefWidth="200.0" BorderPane.alignment="CENTER">
+			<columns>
+				<TableColumn fx:id="ticketIdTableColumn" text="Id" />
+				<TableColumn fx:id="ticketCustomerTableColumn" text="Customer" />
+				<TableColumn fx:id="ticketSeatTableColumn" text="Seat" />
+				<TableColumn fx:id="ticketEventTableColumn" text="Event" />
+				<TableColumn fx:id="ticketDateTableColumn" text="Date" />
+				<TableColumn fx:id="ticketStatusTableColumn" text="Status" />
+				<TableColumn fx:id="ticketCarnetTableColumn" text="Carnet" />				
+				<TableColumn fx:id="ticketPriceTableColumn" text="Price" />
+				<TableColumn fx:id="ticketDiscountTableColumn" text="Discount" />				
+			</columns>
+		</TableView>
+	</center>
+	<left>
+		<VBox alignment="BASELINE_CENTER" prefHeight="200.0" prefWidth="100.0"
+			BorderPane.alignment="CENTER">
+			<children>
+				<Label fx:id="infoLabel">
+					<VBox.margin>
+						<Insets top="10.0" />
+					</VBox.margin>
+				</Label>
+				<Button fx:id="addTicketButton" minHeight="-Infinity" minWidth="-Infinity"
+					mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Add">
+					<VBox.margin>
+						<Insets bottom="5.0" top="5.0" />
+					</VBox.margin>
+				</Button>
+				<Button fx:id="editTicketButton" layoutX="29.0" layoutY="53.0" minHeight="-Infinity"
+					minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0"
+					prefWidth="62.0" text="Edit">
+					<VBox.margin>
+						<Insets bottom="5.0" top="5.0" />
+					</VBox.margin>
+				</Button>
+				<Button fx:id="deleteTicketButton" layoutX="29.0" layoutY="88.0" minHeight="-Infinity"
+					minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0"
+					prefWidth="62.0" text="Delete">
+					<VBox.margin>
+						<Insets bottom="5.0" top="5.0" />
+					</VBox.margin>
+				</Button>
+			</children>
+			<opaqueInsets>
+				<Insets />
+			</opaqueInsets>
+		</VBox>
+	</left>
+</BorderPane>
