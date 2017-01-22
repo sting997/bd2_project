@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.ManyToAny;
@@ -62,6 +64,7 @@ public class Ticket {
 	public void setEvent(Event event) {
 		this.event = event;
 	}
+	@Temporal(TemporalType.DATE)
 	@Column(name="data_sprzedazy")
 	public Date getSellDate() {
 		return sellDate;

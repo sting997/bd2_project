@@ -15,6 +15,8 @@ import org.hibernate.cfg.Configuration;
 
 import bd2.Event;
 import bd2.EventType;
+import bd2.Seat;
+import bd2.Sector;
 import bd2.Stadium;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,12 +24,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class EventTypeTabController {
@@ -39,13 +43,14 @@ public class EventTypeTabController {
 	@FXML
 	private TableColumn<EventType, String> eventTypeNameTableColumn;
 	@FXML
-	private Tab eventTab;
+	private Tab eventTypeTab;
 	@FXML
 	private Button addEventButton;
 	@FXML
 	private Button editEventButton;
 	@FXML
 	private Button deleteEventButton;
+	@FXML private Label infoLabel;
 
 	@FXML
 	public void initialize() {
@@ -57,11 +62,13 @@ public class EventTypeTabController {
 			handleDelete();
 		});
 		editEventButton.setOnAction((ActionEvent event) -> {
-			// TODO handler
+			handleEdit();
 		});
+		infoLabel.setTextFill(Color.FIREBRICK);
 	}
 
 	private void handleAdd() {
+		infoLabel.setText("");
 		HBox root = new HBox();
 		TextField nameTextField = new TextField("Name");
 		Button addButton = new Button("Add");
@@ -83,24 +90,25 @@ public class EventTypeTabController {
 				} catch (HibernateException e) {
 					if (tx != null)
 						tx.rollback();
-					//TODO print some info
+						infoLabel.setText("Error");
 					e.printStackTrace();
 				} finally {
 					session.close();
 				}
 			}catch (NumberFormatException nfx) {
-				// TODO: handle exception
+				infoLabel.setText("Error");
 			}
 		});
 		
 		Stage stage = new Stage();
-		stage.setTitle("Add Event");
+		stage.setTitle("Add Event Type");
 		stage.setScene(new Scene(root));
 		stage.show();
 
 	}
 
 	private void handleDelete() {
+		infoLabel.setText("");
 		int selectedIndex = eventTypeTableView.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			EventType eventType = eventTypeTableView.getItems().get(selectedIndex);
@@ -114,11 +122,59 @@ public class EventTypeTabController {
 			} catch (HibernateException e) {
 				if (tx != null)
 					tx.rollback();
-				// TODO jakos na ekranie pieknie pokazac info ze sie nie da
+					infoLabel.setText("Error");
 				e.printStackTrace();
-			} finally {
+			} catch (Exception e) {
+				infoLabel.setText("Error");
+			} 
+			finally {
 				session.close();
 			}
+		}
+	}
+	
+	private void handleEdit() {
+		infoLabel.setText("");
+		int selectedIndex = eventTypeTableView.getSelectionModel().getSelectedIndex();
+
+		if (selectedIndex >= 0) {
+		EventType eventType = eventTypeTableView.getItems().get(selectedIndex);
+
+			HBox root = new HBox();
+			TextField nameTextField = new TextField("" + eventType.getTypeName());
+			Button editButton = new Button("Edit");
+			root.getChildren().add(nameTextField);
+			root.getChildren().add(editButton);
+
+			editButton.setOnAction((ActionEvent event) -> {
+				try {
+					String name = nameTextField.getText();
+
+					Session session = factory.openSession();
+					Transaction tx = null;
+					try {
+						tx = session.beginTransaction();
+						eventType.setTypeName(name);
+						session.update(eventType);
+						tx.commit();
+						eventTypeTableView.getItems().set(selectedIndex, eventType);
+
+					} catch (HibernateException e) {
+						if (tx != null)
+							tx.rollback();
+						infoLabel.setText("Error");
+					} finally {
+						session.close();
+					}
+				} catch (NumberFormatException e) {
+					infoLabel.setText("Error");
+				}
+			});
+
+			Stage stage = new Stage();
+			stage.setTitle("Edit EventType");
+			stage.setScene(new Scene(root));
+			stage.show();
 		}
 	}
 
@@ -148,8 +204,6 @@ public class EventTypeTabController {
 		} finally {
 			session.close();
 		}
-		//TODO factory needs to be closed at the end of programme
-		//otherwise the programme does not stop and needs to be terminated manually
 		// factory.close();
 	}
 

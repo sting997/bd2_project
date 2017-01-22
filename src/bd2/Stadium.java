@@ -25,7 +25,7 @@ import org.hibernate.cfg.Configuration;
 @Entity
 @Table(name="stadiony")
 public class Stadium {
-	private byte id;
+	private int id;
 	private String name;
 	private Adress adress;
 	private Date openFrom;
@@ -35,10 +35,10 @@ public class Stadium {
 	@Column(name="id_stadionu")
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy="increment")
-	public byte getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(byte id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	

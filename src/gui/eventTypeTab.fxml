@@ -23,7 +23,7 @@
 		<VBox alignment="BASELINE_CENTER" prefHeight="200.0" prefWidth="100.0"
 			BorderPane.alignment="CENTER">
 			<children>
-				<Label text="Menu">
+				<Label fx:id="infoLabel">
 					<VBox.margin>
 						<Insets top="10.0" />
 					</VBox.margin>
@@ -54,14 +54,4 @@
 			</opaqueInsets>
 		</VBox>
 	</left>
-<!-- 	<bottom> -->
-<!-- 		<HBox alignment="BASELINE_CENTER"  -->
-<!-- 			BorderPane.alignment="CENTER"> -->
-<!-- 			<children> -->
-<!-- 				<TextField fx:id="idTextField" promptText="Id" /> -->
-<!-- 				<TextField fx:id="nameTextField" promptText="Name"/> -->
-<!-- 				<Button minWidth="-Infinity" mnemonicParsing="false" text="Add" /> -->
-<!-- 			</children> -->
-<!-- 		</HBox> -->
-<!-- 	</bottom> -->
 </BorderPane>

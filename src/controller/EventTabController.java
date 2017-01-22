@@ -71,6 +71,7 @@ public class EventTabController {
 	}
 
 	private void handleEdit() {
+		infoLabel.setText("");
 		int selectedIndex = eventTableView.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			Event newEvent = eventTableView.getItems().get(selectedIndex);
@@ -90,8 +91,8 @@ public class EventTabController {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				Date date;
 				try {
-					byte stadiumId = Byte.parseByte(stadiumTextField.getText());
-					byte typeId = Byte.parseByte(typeTextField.getText());
+					int stadiumId = Integer.parseInt(stadiumTextField.getText());
+					int typeId = Integer.parseInt(typeTextField.getText());
 					String name = nameTextField.getText();
 					date = dateFormat.parse(dateTextField.getText());
 					Session session = factory.openSession();
@@ -123,13 +124,14 @@ public class EventTabController {
 			});
 
 			Stage stage = new Stage();
-			stage.setTitle("Add Event");
+			stage.setTitle("Edit Event");
 			stage.setScene(new Scene(root));
 			stage.show();
 		}
 	}
 
 	private void handleAdd() {
+		infoLabel.setText("");
 		HBox root = new HBox();
 		TextField nameTextField = new TextField("Name");
 		TextField dateTextField = new TextField("Date");
@@ -146,8 +148,8 @@ public class EventTabController {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date;
 			try {
-				byte stadiumId = Byte.parseByte(stadiumTextField.getText());
-				byte typeId = Byte.parseByte(typeTextField.getText());
+				int stadiumId = Integer.parseInt(stadiumTextField.getText());
+				int typeId = Integer.parseInt(typeTextField.getText());
 				String name = nameTextField.getText();
 				date = dateFormat.parse(dateTextField.getText());
 				Session session = factory.openSession();
@@ -186,6 +188,7 @@ public class EventTabController {
 	}
 
 	private void handleDelete() {
+		infoLabel.setText("");
 		int selectedIndex = eventTableView.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			Event event = eventTableView.getItems().get(selectedIndex);
@@ -247,5 +250,4 @@ public class EventTabController {
 		factory.close();
 		System.out.println("factory closed");
 	}
-
 }

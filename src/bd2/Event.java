@@ -106,4 +106,8 @@ public class Event {
 		factory.close();
 	}
 	
+	@Override
+	public String toString() {
+		return name;
+	}	
 }

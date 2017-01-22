@@ -50,4 +50,9 @@ public class Seat {
 		this.seatNumber = seatNumber;
 	}
 	
+	@Override
+	public String toString() {
+		return "" + sector + " " + rowNumber + " " + seatNumber;
+	}
+	
 }

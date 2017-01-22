@@ -35,9 +35,9 @@
                		<fx:include fx:id="eventTab" source="eventTab.fxml"/>
                </content>
             </Tab>
-            <Tab text="Ticket">
+            <Tab text="EventType">
                <content>
-                 	<fx:include fx:id="ticketTab" source="TicketTab.fxml" />
+               		<fx:include fx:id="eventTypeTab" source="eventTypeTab.fxml"/>
                </content>
             </Tab>
             <Tab text="Carnet">
@@ -50,12 +50,11 @@
                		<fx:include fx:id="seatTab" source="seatTab.fxml"/>
                </content>
             </Tab>
-            <Tab text="EventType">
+            <Tab text="Ticket">
                <content>
-               		<fx:include fx:id="eventTypeTab" source="eventTypeTab.fxml"/>
+               		<fx:include fx:id="ticketTab" source="TicketTab.fxml"/>
                </content>
-            </Tab>
-            
+            </Tab>            
         </tabs>
       </TabPane>
    </center>

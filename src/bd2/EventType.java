@@ -35,8 +35,6 @@ public class EventType {
 	
 	@Override
 	public String toString() {
-//		String string = new String();
-//		return string + id;
 		return typeName;
 	}
 }

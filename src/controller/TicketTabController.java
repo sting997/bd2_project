@@ -23,8 +23,10 @@ import bd2.Carnet;
 import bd2.ClientType;
 import bd2.Customer;
 import bd2.Event;
+import bd2.EventType;
 import bd2.Price;
 import bd2.Seat;
+import bd2.Stadium;
 import bd2.Ticket;
 import bd2.TicketStatus;
 import javafx.beans.property.SimpleStringProperty;
@@ -54,6 +56,8 @@ public class TicketTabController {
 	@FXML
 	private TableView<Ticket> ticketTableView;
 	@FXML
+	private TableColumn<Ticket, Integer> ticketIdTableColumn;
+	@FXML
 	private TableColumn<Ticket, Customer> ticketCustomerTableColumn;
 	@FXML
 	private TableColumn<Ticket, Seat> ticketSeatTableColumn;
@@ -69,8 +73,6 @@ public class TicketTabController {
 	private TableColumn<Ticket, BigDecimal> ticketPriceTableColumn;
 	@FXML
 	private TableColumn<Ticket, BigDecimal> ticketDiscountTableColumn;
-	@FXML
-	private TableColumn<Ticket, Integer> ticketIdTableColumn;
 	@FXML
 	private Tab ticketTab;
 	@FXML
@@ -91,10 +93,10 @@ public class TicketTabController {
 			handleAdd();
 		});
 		deleteTicketButton.setOnAction((ActionEvent event) -> {
-//			handleDelete();
+			handleDelete();
 		});
 		editTicketButton.setOnAction((ActionEvent event) -> {
-//			handleEdit();
+			handleEdit();
 		});
 		infoLabel.setTextFill(Color.FIREBRICK);
 
@@ -131,8 +133,8 @@ public class TicketTabController {
 				int seatId = Integer.parseInt(seatTextField.getText());
 				int eventId = Integer.parseInt(eventTextField.getText());
 				date = dateFormat.parse(dateTextField.getText());
-				byte statusId = Byte.parseByte(statusTextField.getText());
-				Integer carnetId = Integer.parseInt(carnetTextField.getText());
+				int statusId = Integer.parseInt(statusTextField.getText());
+				int carnetId = Integer.parseInt(carnetTextField.getText());
 				BigDecimal discount = new BigDecimal(discountTextField.getText());
 				BigDecimal price = new BigDecimal(priceTextField.getText());
 
@@ -203,8 +205,85 @@ public class TicketTabController {
 	}
 
 	private void handleEdit() {
-		//TODO
+		infoLabel.setText("");
+		int selectedIndex = ticketTableView.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			Ticket newTicket = ticketTableView.getItems().get(selectedIndex);
+			HBox root = new HBox();
+			TextField customerTextField = new TextField("" + newTicket.getCustomer());
+			TextField seatTextField = new TextField("" + newTicket.getSeat().getId());
+			TextField eventTextField = new TextField("" + newTicket.getEvent().getId());
+			TextField dateTextField = new TextField("" + newTicket.getSellDate());
+			TextField statusTextField = new TextField("" + newTicket.getTicketStatus().getId());
+			TextField carnetTextField = new TextField("" + newTicket.getCarnet());
+			TextField priceTextField = new TextField("" + newTicket.getPrice());
+			TextField discountTextField = new TextField("" + newTicket.getDiscount());
+			Button editButton = new Button("Edit");
+			root.getChildren().add(customerTextField);
+			root.getChildren().add(seatTextField);
+			root.getChildren().add(eventTextField);
+			root.getChildren().add(dateTextField);
+			root.getChildren().add(statusTextField);
+			root.getChildren().add(carnetTextField);
+			root.getChildren().add(priceTextField);
+			root.getChildren().add(discountTextField);
+			root.getChildren().add(editButton);
+			
+			editButton.setOnAction((ActionEvent actionEvent) -> {
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date date;
+				try {
+					int customerId = Integer.parseInt(customerTextField.getText());
+					int seatId = Integer.parseInt(seatTextField.getText());
+					int eventId = Integer.parseInt(eventTextField.getText());
+					date = dateFormat.parse(dateTextField.getText());
+					int statusId = Integer.parseInt(statusTextField.getText());
+					int carnetId = Integer.parseInt(carnetTextField.getText());
+					BigDecimal discount = new BigDecimal(discountTextField.getText());
+					BigDecimal price = new BigDecimal(priceTextField.getText());
+
+					Session session = factory.openSession();
+					Transaction tx = null;
+					try {
+						tx = session.beginTransaction();
+						Customer customer = (Customer) session.get(Customer.class, customerId);
+						Seat seat = (Seat) session.get(Seat.class, seatId);
+						Event event = (Event) session.get(Event.class, eventId);
+						TicketStatus ticketStatus = (TicketStatus) session.get(TicketStatus.class, statusId);
+						Carnet carnet = (Carnet) session.get(Carnet.class, carnetId);
+						
+						newTicket.setCustomer(customer);
+						newTicket.setSeat(seat);
+						newTicket.setEvent(event);
+						newTicket.setSellDate(date);
+						newTicket.setTicketStatus(ticketStatus);
+						newTicket.setCarnet(carnet);
+						newTicket.setDiscount(discount);
+						newTicket.setPrice(price);
+						
+						session.update(newTicket);
+						tx.commit();
+						ticketTableView.getItems().set(selectedIndex, newTicket);
+					} catch (HibernateException e) {
+						if (tx != null)
+							tx.rollback();
+						infoLabel.setText("Error");
+					} finally {
+						session.close();
+					}
+				} catch (NumberFormatException nfx) {
+					infoLabel.setText("Error");
+				} catch (ParseException e) {
+					infoLabel.setText("Error");
+				}
+			});
+			Stage stage = new Stage();
+			stage.setTitle("Edit Ticket");
+			stage.setScene(new Scene(root));
+			stage.show();
+		}
 	}
+	
 
 	private void loadData() {
 		ticketIdTableColumn.setCellValueFactory(new PropertyValueFactory<Ticket, Integer>("id"));

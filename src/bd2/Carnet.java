@@ -59,4 +59,9 @@ public class Carnet {
 		this.price = price;
 	}
 	
+	@Override
+	public String toString() {
+		return "" + id;
+	}
+	
 }

@@ -13,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name="sektory")
 public class Sector {
-	private byte id;
+	private int id;
 	private Stadium stadium;
 	private SectorType sectorType;
 	
@@ -21,10 +21,10 @@ public class Sector {
 	@Column(name="id_sektora")
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy="increment")
-	public byte getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(byte id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	@ManyToOne
@@ -49,6 +49,6 @@ public class Sector {
 	public String toString() {
 		return this.sectorType.getTypeName();
 	}
-	
+
 	
 }

@@ -11,17 +11,17 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "statusy_biletow")
 public class TicketStatus {
-	private byte id;
+	private int id;
 	private String status;
 	
 	@Id
 	@Column(name="id_statusu")
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy="increment")
-	public byte getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(byte id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
@@ -31,5 +31,10 @@ public class TicketStatus {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	@Override
+	public String toString() {
+		return status;
 	}
 }

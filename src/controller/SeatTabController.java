@@ -88,7 +88,7 @@ public class SeatTabController {
 
 		addButton.setOnAction((ActionEvent event) -> {
 			try {
-				byte sectorId = Byte.parseByte(sectorTextField.getText());
+				int sectorId = Integer.parseInt(sectorTextField.getText());
 				int rowNumber = Integer.parseInt(rowNumberTextField.getText());
 				int seatNumber = Integer.parseInt(seatNumberTextField.getText());
 				Session session = factory.openSession();
@@ -116,7 +116,7 @@ public class SeatTabController {
 		});
 
 		Stage stage = new Stage();
-		stage.setTitle("Add Event");
+		stage.setTitle("Add Seat");
 		stage.setScene(new Scene(root));
 		stage.show();
 
@@ -166,7 +166,7 @@ public class SeatTabController {
 
 			editButton.setOnAction((ActionEvent event) -> {
 				try {
-					byte sectorId = Byte.parseByte(sectorTextField.getText());
+					int sectorId = Integer.parseInt(sectorTextField.getText());
 					int rowNumber = Integer.parseInt(rowNumberTextField.getText());
 					int seatNumber = Integer.parseInt(seatNumberTextField.getText());
 

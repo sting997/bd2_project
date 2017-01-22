@@ -123,7 +123,7 @@ public class CustomerTabController {
 				String email = emailTextField.getText();
 				String phoneNumber = phoneNumberTextField.getText();
 				String bankAccount = bankAccountTextField.getText();
-				byte clientTypeId = Byte.parseByte(clientTypeTextField.getText());
+				int clientTypeId = Integer.parseInt(clientTypeTextField.getText());
 				float discount = Float.parseFloat(discountTextField.getText());
 				int adressId = Integer.parseInt(adressTextField.getText());
 				
@@ -227,7 +227,7 @@ public class CustomerTabController {
 					String email = emailTextField.getText();
 					String phoneNumber = phoneNumberTextField.getText();
 					String bankAccount = bankAccountTextField.getText();
-					byte clientTypeId = Byte.parseByte(clientTypeTextField.getText());
+					int clientTypeId = Integer.parseInt(clientTypeTextField.getText());
 					float discount = Float.parseFloat(discountTextField.getText());
 					int adressId = Integer.parseInt(adressTextField.getText());
 
