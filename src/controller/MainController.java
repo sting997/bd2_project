@@ -29,6 +29,7 @@ public class MainController {
 	@FXML private PriceTabController priceTabController;
 	@FXML private StadiumTabController stadiumTabController;
 	@FXML private ReservationTabController reservationTabController;
+	@FXML private AdressTabController adressTabController;
 	@FXML private MenuItem closeMenuItem;
 	
 	@FXML
@@ -51,7 +52,8 @@ public class MainController {
 		sectorTabController.close();
 		priceTabController.close();
 		stadiumTabController.close();
-		reservationTabController.close();;
+		reservationTabController.close();
+		adressTabController.close();
 		
 		Platform.exit();
 	}

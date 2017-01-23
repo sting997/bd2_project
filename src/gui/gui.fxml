@@ -90,6 +90,11 @@
                		<fx:include fx:id="stadiumTab" source="stadiumTab.fxml"/>
                </content>
             </Tab>
+            <Tab text="Address">
+               <content>
+               		<fx:include fx:id="adressTab" source="adressTab.fxml"/>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </center>

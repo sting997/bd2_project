@@ -75,8 +75,6 @@ public class CustomerTabController {
 	@FXML
 	public void initialize() {
 		loadData();
-		if(addCustomerButton == null)
-		     System.out.println("Hello, World");
 		addCustomerButton.setOnAction((ActionEvent event) -> {
 			handleAdd();
 		});
