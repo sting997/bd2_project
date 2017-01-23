@@ -103,4 +103,9 @@ public class Ticket {
 		this.discount = discount;
 	}
 	
+	@Override
+	public String toString() {
+		return "" + id;
+	}
+	
 }

@@ -65,6 +65,11 @@
                		<fx:include fx:id="ticketStatusTab" source="ticketStatusTab.fxml"/>
                </content>
             </Tab>
+            <Tab text="Reservation">
+               <content>
+               		<fx:include fx:id="reservationTab" source="reservationTab.fxml"/>
+               </content>
+            </Tab>
             <Tab text="Sector">
                <content>
                		<fx:include fx:id="sectorTab" source="sectorTab.fxml"/>
@@ -78,6 +83,11 @@
             <Tab text="Price">
                <content>
                		<fx:include fx:id="priceTab" source="priceTab.fxml"/>
+               </content>
+            </Tab>
+            <Tab text="Stadium">
+               <content>
+               		<fx:include fx:id="stadiumTab" source="stadiumTab.fxml"/>
                </content>
             </Tab>
         </tabs>

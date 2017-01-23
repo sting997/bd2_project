@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.HBox?>
+
+
+<BorderPane prefHeight="200.0" prefWidth="200.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.ReservationTabController">
+	<center>
+		<TableView fx:id="reservationTableView" prefHeight="200.0"
+			prefWidth="200.0" BorderPane.alignment="CENTER">
+			<columns>
+				<TableColumn fx:id="reservationIdTableColumn" text="Id" />
+				<TableColumn fx:id="reservationCustomerTableColumn" text="Customer" />
+				<TableColumn fx:id="reservationTicketTableColumn" text="Ticket" />
+				<TableColumn fx:id="reservationSubmitDateTableColumn" text="SubmitDate" />
+				<TableColumn fx:id="reservationExpiryDateTableColumn" text="ExpiryDate" />
+				<TableColumn fx:id="reservationExecutedTableColumn" text="Executed" />
+			</columns>
+		</TableView>
+	</center>
+	<left>
+		<VBox alignment="BASELINE_CENTER" prefHeight="200.0" prefWidth="100.0"
+			BorderPane.alignment="CENTER">
+			<children>
+				<Label fx:id="infoLabel">
+					<VBox.margin>
+						<Insets top="10.0" />
+					</VBox.margin>
+				</Label>
+				<Button fx:id="addReservationButton" minHeight="-Infinity" minWidth="-Infinity"
+					mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Add">
+					<VBox.margin>
+						<Insets bottom="5.0" top="5.0" />
+					</VBox.margin>
+				</Button>
+				<Button fx:id="editReservationButton" layoutX="29.0" layoutY="53.0" minHeight="-Infinity"
+					minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0"
+					prefWidth="62.0" text="Edit">
+					<VBox.margin>
+						<Insets bottom="5.0" top="5.0" />
+					</VBox.margin>
+				</Button>
+				<Button fx:id="deleteReservationButton" layoutX="29.0" layoutY="88.0" minHeight="-Infinity"
+					minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0"
+					prefWidth="62.0" text="Delete">
+					<VBox.margin>
+						<Insets bottom="5.0" top="5.0" />
+					</VBox.margin>
+				</Button>
+			</children>
+			<opaqueInsets>
+				<Insets />
+			</opaqueInsets>
+		</VBox>
+	</left>
+</BorderPane>

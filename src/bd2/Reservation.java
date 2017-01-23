@@ -23,6 +23,7 @@ public class Reservation {
 	private Ticket ticket;
 	private Date submitDate;
 	private Date expiryDate;
+	private boolean executed;
 
 	@Id
 	@Column(name="id_rezerwacji")
@@ -65,6 +66,14 @@ public class Reservation {
 	}
 	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
+	}
+	
+	@Column(name="zrealizowana")
+	public boolean getExecuted() {
+		return executed;
+	}
+	public void setExecuted(boolean executed) {
+		this.executed = executed;
 	}
 	
 }
